@@ -10,20 +10,22 @@ from .DOM_selectors import linked_in_selectors as selectors
 
 class DataCollector(ScrapBase):
     def __init__(self, driver):
-        ScrapBase.__init__(self, driver)
+        ScrapBase.__init__(self, driver, driver_wait_timeout=10)
 
     @ScrapBase.sleep_time()
     def get_selenium_element(self, selector):
-        tries = 3
+        tries = 2
         for _ in range(tries):
             try:
                 return self.wait.until(EC.presence_of_element_located(
-                    (By.XPATH, selectors.get(selector, ''))
+                    (By.XPATH, selectors.get(selector))
                 ))
-            except TimeoutException as e:
+            except TimeoutException:
                 print(f'It seems like there was an error while trying to get {selector}')
                 # trying with a different xpath selector
                 selector += '_alt'
+                if not selectors.get(selector):
+                    break
                 sleep(5)
 
     def get_job_title(self):
@@ -58,6 +60,14 @@ class DataCollector(ScrapBase):
         element = self.get_selenium_element('company_industry')
         return element and element.text
 
+    def get_poster_name(self):
+        element = self.get_selenium_element('poster_name_and_linked_in_url')
+        return element and element.text
+
+    def get_poster_linked_in_url(self):
+        element = self.get_selenium_element('poster_name_and_linked_in_url')
+        return element and element.get_attribute('href')
+
     def get_required_data(self):
         self.js_popup_alert_message('Getting job data...')
         # Job info
@@ -72,7 +82,9 @@ class DataCollector(ScrapBase):
         company_linked_in_url = self.get_company_linked_in_url()
         company_industry = self.get_company_industry()
 
-        # Porter info
+        # Poster info
+        poster_name = self.get_poster_name()
+        poster_linked_in_url = self.get_poster_linked_in_url()
 
         return {
             'job_type': job_type,
@@ -83,4 +95,6 @@ class DataCollector(ScrapBase):
             'company_name': company_name,
             'company_linked_in_url': company_linked_in_url,
             'company_industry': company_industry,
+            'poster_name': poster_name,
+            'poster_linked_in_url': poster_linked_in_url,
         }

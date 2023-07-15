@@ -5,9 +5,9 @@ from selenium.webdriver.support.ui import WebDriverWait
 
 
 class ScrapBase:
-    def __init__(self, driver):
+    def __init__(self, driver, driver_wait_timeout=30):
         self.driver = driver
-        self.wait = WebDriverWait(self.driver, 30)
+        self.wait = WebDriverWait(self.driver, driver_wait_timeout)
 
     @classmethod
     def sleep_time(cls, sleep_seconds=0):
