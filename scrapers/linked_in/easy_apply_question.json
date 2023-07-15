@@ -1,0 +1,26 @@
+{
+  "First name":  "Hanz Danilo",
+  "Last name": "Gallego Lar",
+  "Phone country code":  "Colombia (+57)",
+  "Mobile phone number": "3108346898",
+  "Email address":  "hdgl.9914@gmail.com",
+  "¿Cuántos años de experiencia tienes con AngularJS?": "1",
+  "¿Cuántos años de experiencia tienes con .NET Framework?": "1",
+  "¿Cuántos años de experiencia tienes con Amazon Web Services (AWS)?": "1",
+  "How many years of work experience do you have with C#?": "1",
+  "How many years of work experience do you have with React.js?": "2",
+  "How many years of work experience do you have with Azure Functions?": "2",
+  "What is your level of proficiency in English?": "Conversational",
+  "Do you have experience working with AuthZero?": "Yes",
+  "J2EE": "Yes",
+  "Java": "Yes",
+  "AWS": "Yes",
+  "Azure": "No",
+  "Are you open to contract work?": "Yes",
+  "How many years of experience do you have with Microservice Architecture?": "1",
+  "How many years of hands-on experience do you have with Docker?": "2",
+  "Are you able to work during Pacific Standard Timezone business hours for 40 hours a week": "yes",
+  "Describe your level of DevOps experience in years.": "I have 2 years of professional experience working in devops",
+  "Do you have either Backend or Full Stack experience? Share some of the projects you are involved in with these stacks.": "One of my notable contributions involved developing CRMs for blogs, leveraging Python to create efficient and user-friendly systems. Additionally, I utilized Python to create web scrapers, allowing the extraction and analysis of data from different sources. These scrapers played a crucial role in gathering relevant information for further processing.\n\nAnother remarkable project I worked on involved integrating face recognition technology into an online testing platform. This integration aimed to enhance fraud prevention by verifying the identities of candidates during their test sessions. Python proved to be a powerful tool in implementing this feature, ensuring the security and integrity of the testing process."
+
+}
