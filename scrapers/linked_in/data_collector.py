@@ -37,6 +37,10 @@ class DataCollector(ScrapBase):
         element = self.get_selenium_element('company_industry')
         return element and element.text
 
+    def _get_recruiter_card(self):
+        element = self.get_selenium_element('recruiter_card')
+        return element
+
     def get_recruiter_name(self):
         element = self.get_selenium_element('recruiter_name_and_linked_in_url')
         return element and element.text
@@ -59,7 +63,9 @@ class DataCollector(ScrapBase):
         }
 
     def get_recruiter_data(self):
-        self.js_popup_alert_message('Getting recruiter data...')
+        self.js_popup_alert_message('Getting recruiter data...', 2)
+        if not self._get_recruiter_card():
+            return {}
         # recruiter info
         recruiter_name = self.get_recruiter_name()
         recruiter_linked_in_url = self.get_recruiter_linked_in_url()

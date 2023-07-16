@@ -21,6 +21,21 @@ class Scraper:
         self.searcher = JobSearchPage(driver, driver_wait_timeout=60)
         self.data_collector = DataCollector(driver)
 
+    @staticmethod
+    def save_scraped_data(company_data, recruiter_data, job_data):
+        company = Company.get_or_create(fields=('pk',),
+                                        constraints={'linked_in_url': company_data['linked_in_url']},
+                                        **company_data)
+
+        if recruiter_data:
+            recruiter = Recruiter.get_or_create(fields=('pk',),
+                                                constraints={'linked_in_url': recruiter_data['linked_in_url']},
+                                                **recruiter_data, company_id=company.pk)
+        else:
+            recruiter = None
+
+        _ = Job.get_or_create(**job_data, company_id=company.pk, recruiter_id=recruiter and recruiter.pk)
+
     @ScrapBase.sleep_time()
     def save_job(self):
         """ Every job will be saved to apply later, fortunately when recruiter
@@ -39,7 +54,7 @@ class Scraper:
             print('Sorry, there was an error saving the job. most probably because you already applied')
             return True
 
-    def _go_foreach_job(self):
+    def _init_jobs_scraping(self):
         jobs_list = self.searcher.get_jobs_list()
         scraped_jobs = 0
         for job in jobs_list:
@@ -54,21 +69,11 @@ class Scraper:
                 job_data = self.data_collector.get_job_data()
                 recruiter_data = self.data_collector.get_recruiter_data()
 
-                company = Company.get_or_create(fields=('pk',),
-                                                constraints={'linked_in_url': company_data['linked_in_url']},
-                                                **company_data)
-                # TODO: Handle this error in a more appropriate way
-                if recruiter_data['linked_in_url']:
-                    recruiter = Recruiter.get_or_create(fields=('pk',),
-                                                        constraints={'linked_in_url': recruiter_data['linked_in_url']},
-                                                        **recruiter_data, company_id=company.pk)
-                else:
-                    recruiter = None
-                _ = Job.get_or_create(**job_data, company_id=company.pk, recruiter_id=recruiter and recruiter.pk)
+                self.save_scraped_data(company_data, recruiter_data, job_data)
 
-                print(company_data)
-                print(job_data)
-                print(recruiter_data)
+                # print(company_data)
+                # print(job_data)
+                # print(recruiter_data)
                 scraped_jobs += 1
             except ElementClickInterceptedException:
                 print('The current job card was not clickable')
@@ -80,6 +85,6 @@ class Scraper:
     def start(self, position, location):
         self.loger.execute()
         self.searcher.got_to_jobs(position, location)
-        self._go_foreach_job()
+        self._init_jobs_scraping()
 
         print(f'{datetime.now()} -> Scraper has finished')

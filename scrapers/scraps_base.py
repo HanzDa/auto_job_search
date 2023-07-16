@@ -63,7 +63,7 @@ class ScrapBase:
         self.driver.execute_script(js_snippet, message, display_seconds * 1000)
 
     def get_selenium_element(self, selector):
-        sleep(2)
+        sleep(1)
         tries = 2
         for _ in range(tries):
             try:

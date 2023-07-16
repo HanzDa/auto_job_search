@@ -23,6 +23,7 @@ linked_in_selectors = {
     'company_name_and_linked_in_url': '/html/body/div[5]/div[3]/div[4]/div/div/main/div/div[2]/div/div[2]/div[1]/div/section/section/div[1]/div[1]/div/div[2]/div[1]/a',
     'company_industry': '/html/body/div[5]/div[3]/div[4]/div/div/main/div/div[2]/div/div[2]/div[1]/div/div[1]/div/div[1]/div[1]/div[3]/ul/li[2]/span',
     # about job recruiter
+    'recruiter_card': '/html/body/div[5]/div[3]/div[4]/div/div/main/div/div[2]/div/div[2]/div[1]/div/div[2]/div',
     'recruiter_name_and_linked_in_url': '/html/body/div[5]/div[3]/div[4]/div/div/main/div/div[2]/div/div[2]/div[1]/div/div[2]/div/div/div[2]/a',
     # about easy application
     'current_step_title': '/html/body/div[3]/div/div/div[2]/div/div[2]/form/div/div/h3',
