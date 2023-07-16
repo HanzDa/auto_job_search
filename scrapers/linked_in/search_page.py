@@ -11,8 +11,8 @@ from scrapers.scraps_base import ScrapBase
 
 
 class JobSearchPage(ScrapBase):
-    def __init__(self, driver):
-        ScrapBase.__init__(self, driver)
+    def __init__(self, driver, **kwargs):
+        ScrapBase.__init__(self, driver, **kwargs)
 
     def _activate_easy_apply(self):
         tries = 3

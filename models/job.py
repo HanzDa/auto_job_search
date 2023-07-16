@@ -26,3 +26,6 @@ class Job(BaseModel):
         self.recruiter_id = kwargs.get('recruiter_id')
         self.company_id = kwargs.get('company_id')
         super().__init__()
+
+    class Meta:
+        table_name = 'jobs'

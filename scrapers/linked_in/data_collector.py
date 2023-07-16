@@ -37,41 +37,50 @@ class DataCollector(ScrapBase):
         element = self.get_selenium_element('company_industry')
         return element and element.text
 
-    def get_poster_name(self):
-        element = self.get_selenium_element('poster_name_and_linked_in_url')
+    def get_recruiter_name(self):
+        element = self.get_selenium_element('recruiter_name_and_linked_in_url')
         return element and element.text
 
-    def get_poster_linked_in_url(self):
-        element = self.get_selenium_element('poster_name_and_linked_in_url')
+    def get_recruiter_linked_in_url(self):
+        element = self.get_selenium_element('recruiter_name_and_linked_in_url')
         return element and element.get_attribute('href')
 
-    def get_required_data(self):
-        self.js_popup_alert_message('Getting job data...')
-        # Job info
-        job_type = self.get_job_type()
-        job_description = self.get_job_description()
-        job_title = self.get_job_title()
-        job_location = self.get_job_location()
-        job_posted_date = self.get_job_posted_date()
-
+    def get_company_data(self):
+        self.js_popup_alert_message('Getting company data...')
         # Company info
         company_name = self.get_company_name()
         company_linked_in_url = self.get_company_linked_in_url()
         company_industry = self.get_company_industry()
 
-        # Poster info
-        poster_name = self.get_poster_name()
-        poster_linked_in_url = self.get_poster_linked_in_url()
+        return {
+            'name': company_name,
+            'linked_in_url': company_linked_in_url,
+            'industry': company_industry,
+        }
+
+    def get_recruiter_data(self):
+        self.js_popup_alert_message('Getting recruiter data...')
+        # recruiter info
+        recruiter_name = self.get_recruiter_name()
+        recruiter_linked_in_url = self.get_recruiter_linked_in_url()
 
         return {
-            'job_type': job_type,
-            'job_description': job_description or '',
-            'job_title': job_title,
-            'job_location': job_location,
-            'job_posted_date': job_posted_date,
-            'company_name': company_name,
-            'company_linked_in_url': company_linked_in_url,
-            'company_industry': company_industry,
-            'poster_name': poster_name,
-            'poster_linked_in_url': poster_linked_in_url,
+            'name': recruiter_name,
+            'linked_in_url': recruiter_linked_in_url,
+        }
+
+    def get_job_data(self):
+        # self.js_popup_alert_message('Getting job data...')
+        # Job info
+        job_type = self.get_job_type()
+        job_description = self.get_job_description()
+        job_title = self.get_job_title()
+        job_location = self.get_job_location()
+        # job_posted_date = self.get_job_posted_date() Format date is required
+        return {
+            'type': job_type,
+            'description': job_description,
+            'title': job_title,
+            'location': job_location,
+            # 'posted_date': job_posted_date,
         }

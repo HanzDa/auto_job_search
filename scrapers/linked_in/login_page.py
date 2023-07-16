@@ -11,10 +11,10 @@ from scrapers.scraps_base import ScrapBase
 
 
 class LoginPage(ScrapBase):
-    def __init__(self, driver, user, password):
+    def __init__(self, driver, user, password, **kwargs):
         self.user = user
         self.password = password
-        ScrapBase.__init__(self, driver)
+        ScrapBase.__init__(self, driver, **kwargs)
 
     def execute(self):
         self.js_popup_alert_message('Logging into the page...', 10)
@@ -34,12 +34,10 @@ class LoginPage(ScrapBase):
                     (By.XPATH, selectors.get('login_button'))
                 ))
                 login_button.click()
-
-                time.sleep(20)  # Pass catcha system manually
                 break
             except TimeoutException as e:
                 # In case home page was loaded in other way
                 print(f'There was an error while trying to login\n', e)
-                time.sleep(5)
+                time.sleep(2)
                 print('Trying again...')
                 self.driver.get('https://www.linkedin.com/home')

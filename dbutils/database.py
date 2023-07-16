@@ -1,8 +1,11 @@
 import psycopg2
+
+from psycopg2.errors import UniqueViolation
+
 from dotenv import dotenv_values
 
 
-config = dotenv_values('../.env')
+config = dotenv_values('.env')
 
 
 class Database:
@@ -20,7 +23,7 @@ class Database:
                 password=config['password']
             )
             self.cursor = self.conn.cursor()
-        except (Exception, psycopg2.Error) as error:
+        except psycopg2.Error as error:
             raise f"Error while connecting to PostgreSQL:\n {error}"
 
     def close_connection(self):
@@ -29,12 +32,20 @@ class Database:
                 self.cursor.close()
             if self.conn:
                 self.conn.close()
-        except (Exception, psycopg2.Error) as error:
+        except psycopg2.Error as error:
             print("Error while closing the connection:", error)
 
     def execute_query(self, query):
+        """ Execute and sql query.
+            :params query: SQL query sentence
+
+            return:
+                boolean: True if is successful False otherwise.
+        """
         try:
             self.connect()
             self.cursor.execute(query)
-        except (Exception, psycopg2.Error) as error:
-            raise Exception(f'There was an error trying to execute the query:\n {error}')
+            return True
+        except UniqueViolation as error:
+            print(error)
+            return False

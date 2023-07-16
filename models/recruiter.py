@@ -17,4 +17,5 @@ class Recruiter(BaseModel):
         self.company_id = kwargs.get('company_id')
         super().__init__()
 
-
+    class Meta:
+        table_name = 'recruiters'
