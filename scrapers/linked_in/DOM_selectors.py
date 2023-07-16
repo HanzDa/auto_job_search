@@ -16,9 +16,16 @@ linked_in_selectors = {
     'job_description': '/html/body/div[5]/div[3]/div[4]/div/div/main/div/div[2]/div/div[2]/div[1]/div/div[4]/article/div/div[1]',
     'job_description_alt': '/html/body/div[5]/div[3]/div[4]/div/div/main/div/div[2]/div/div[2]/div[1]/div/div[2]',
     'save_job_button': '//*[@id="main"]/div/div[2]/div/div[2]/div[1]/div/div[1]/div/div[1]/div[1]/div[4]/div/button',
+    'saved_jobs_list': '/html/body/div[5]/div[3]/div/main/section/div/div[2]/div/ul',
+    'saved_job_more_options_button': '/html/body/div[5]/div[3]/div/main/section/div/div[2]/div/ul/li[1]/div/div/div[3]/div/div[1]/button',
+    'saved_job_easy_apply_button': '/html/body/div[5]/div[3]/div/main/section/div/div[2]/div/ul/li[1]/div/div/div[3]/div/div[1]/div/div/div[1]',
     # about companies
     'company_name_and_linked_in_url': '/html/body/div[5]/div[3]/div[4]/div/div/main/div/div[2]/div/div[2]/div[1]/div/section/section/div[1]/div[1]/div/div[2]/div[1]/a',
     'company_industry': '/html/body/div[5]/div[3]/div[4]/div/div/main/div/div[2]/div/div[2]/div[1]/div/div[1]/div/div[1]/div[1]/div[3]/ul/li[2]/span',
     # about job poster
     'poster_name_and_linked_in_url': '/html/body/div[5]/div[3]/div[4]/div/div/main/div/div[2]/div/div[2]/div[1]/div/div[2]/div/div/div[2]/a',
+    # about easy application
+    'current_step_title': '/html/body/div[3]/div/div/div[2]/div/div[2]/form/div/div/h3',
+    'current_step_title_alt': '/html/body/div[3]/div/div/div[2]/div/div[2]/form/div/div[1]/h3',
+    'next_review_or_submit_button': 'artdeco-button artdeco-button--2 artdeco-button--primary ember-view'
 }

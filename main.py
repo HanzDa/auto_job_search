@@ -16,19 +16,3 @@ if __name__ == '__main__':
     position = input('What position do you want to search for?')
     location = input('What location do you want to search in?')
     linked_in_scraper.start(position, location)
-
-    # db = Database(
-    #     host=config['host'],
-    #     port=config['port'],
-    #     database=config['database'],
-    #     user=config['user'],
-    #     password=config['password'],
-    # )
-    #
-    # db.connect()
-    #
-    # query = "SELECT * FROM jobs"
-    # result = db.execute_query(query)
-    # print(result)
-    #
-    # db.close_connection()

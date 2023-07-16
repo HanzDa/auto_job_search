@@ -1,11 +1,23 @@
 from functools import wraps
 from time import sleep
 
+from selenium.common import TimeoutException
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver import Chrome
+
+from .linked_in.DOM_selectors import linked_in_selectors as selectors
 
 
 class ScrapBase:
-    def __init__(self, driver, driver_wait_timeout=30):
+    def __init__(self, driver: Chrome, driver_wait_timeout=30):
+        """ Constructor method.
+        params:
+            driver (WebDriver): web driver instance
+            driver_wait_timeout (int): Time that the browser waits before crash
+
+        """
         self.driver = driver
         self.wait = WebDriverWait(self.driver, driver_wait_timeout)
 
@@ -49,3 +61,19 @@ class ScrapBase:
         """
 
         self.driver.execute_script(js_snippet, message, display_seconds * 1000)
+
+    @sleep_time()
+    def get_selenium_element(self, selector):
+        tries = 2
+        for _ in range(tries):
+            try:
+                return self.wait.until(EC.presence_of_element_located(
+                    (By.XPATH, selectors.get(selector))
+                ))
+            except TimeoutException:
+                print(f'It seems like there was an error while trying to get {selector}')
+                # trying with a different xpath selector
+                selector += '_alt'
+                if not selectors.get(selector):
+                    break
+                sleep(5)

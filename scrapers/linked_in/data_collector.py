@@ -1,32 +1,9 @@
-from time import sleep
-
-from selenium.common import TimeoutException
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support import expected_conditions as EC
-
 from scrapers.scraps_base import ScrapBase
-from .DOM_selectors import linked_in_selectors as selectors
 
 
 class DataCollector(ScrapBase):
     def __init__(self, driver):
         ScrapBase.__init__(self, driver, driver_wait_timeout=10)
-
-    @ScrapBase.sleep_time()
-    def get_selenium_element(self, selector):
-        tries = 2
-        for _ in range(tries):
-            try:
-                return self.wait.until(EC.presence_of_element_located(
-                    (By.XPATH, selectors.get(selector))
-                ))
-            except TimeoutException:
-                print(f'It seems like there was an error while trying to get {selector}')
-                # trying with a different xpath selector
-                selector += '_alt'
-                if not selectors.get(selector):
-                    break
-                sleep(5)
 
     def get_job_title(self):
         element = self.get_selenium_element('job_title')
