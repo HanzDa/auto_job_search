@@ -21,17 +21,19 @@ class ScrapBase:
         self.driver = driver
         self.wait = WebDriverWait(self.driver, driver_wait_timeout)
 
-    @classmethod
-    def sleep_time(cls, sleep_seconds=0):
-        def wrapper(func):
-            @wraps(func)
-            def inner(*args, **kwargs):
-                sleep(sleep_seconds or 3)
-                return func(*args, **kwargs)
+    def open_new_browser_window(self, new_url, win_name='_blank'):
+        """ Open a new browser window.
+        arguments:
+            url(str): URL to open
+            win_name(str): New window name
+            switch(bool): Whether to switch
+        """
+        self.driver.execute_script('window.open("about:blank", arguments[0]);', win_name)
+        self.driver.get(new_url)
 
-            return inner
-
-        return wrapper
+    def close_window(self):
+        self.driver.close()
+        self.driver.switch_to.window(self.driver.window_handles[0])
 
     def js_popup_alert_message(self, message, display_seconds=5):
         js_snippet = """
@@ -72,8 +74,20 @@ class ScrapBase:
                 ))
             except TimeoutException:
                 print(f'It seems like there was an error while trying to get {selector}')
-                # trying with a different xpath selector
+                # trying with a different selector
                 selector += '_alt'
                 if not selectors.get(selector):
                     break
                 sleep(5)
+
+    @classmethod
+    def sleep_time(cls, sleep_seconds=3):
+        def wrapper(func):
+            @wraps(func)
+            def inner(*args, **kwargs):
+                sleep(sleep_seconds)
+                return func(*args, **kwargs)
+
+            return inner
+
+        return wrapper

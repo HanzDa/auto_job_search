@@ -12,6 +12,7 @@ from scrapers.linked_in.login_page import LoginPage
 from scrapers.linked_in.search_page import JobSearchPage
 from scrapers.scraps_base import ScrapBase
 from .DOM_selectors import linked_in_selectors as selectors
+from .recruiter_profile import RecruiterProfile
 
 
 class Scraper:
@@ -34,7 +35,7 @@ class Scraper:
         else:
             recruiter = None
 
-        _ = Job.get_or_create(**job_data, company_id=company.pk, recruiter_id=recruiter and recruiter.pk)
+        Job.get_or_create(**job_data, company_id=company.pk, recruiter_id=recruiter and recruiter.pk)
 
     @ScrapBase.sleep_time()
     def save_job(self):
@@ -71,9 +72,14 @@ class Scraper:
 
                 self.save_scraped_data(company_data, recruiter_data, job_data)
 
-                # print(company_data)
-                # print(job_data)
-                # print(recruiter_data)
+                # if recruiter_data.get('linked_in_url'):
+                #     recruiter_profile = RecruiterProfile(self.driver, driver_wait_timeout=10)
+                #     recruiter_profile.open_new_browser_window(recruiter_data.get('linked_in_url'))
+                #
+                #     time.sleep(5)
+                #
+                #     recruiter_profile.close_window()
+
                 scraped_jobs += 1
             except ElementClickInterceptedException:
                 print('The current job card was not clickable')
@@ -84,7 +90,7 @@ class Scraper:
 
     def start(self, position, location):
         self.loger.execute()
-        self.searcher.got_to_jobs(position, location)
+        self.searcher.go_to_jobs(position, location)
         self._init_jobs_scraping()
 
         print(f'{datetime.now()} -> Scraper has finished')

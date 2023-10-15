@@ -1,7 +1,7 @@
-from dbutils.database import Database
+from db_utils.database import Database
 
 
-class BaseModel:
+class HelperModel:
     def __init__(self):
         self.db = Database()
 
@@ -31,9 +31,7 @@ class BaseModel:
     @staticmethod
     def _get_query_constraints(**constraints):
         query_constraints = ''
-        counter = 0
-        for key, value in constraints.items():
-            counter += 1
+        for counter, (key, value) in enumerate(constraints.items(), start=1):
             query_constraints += f"{key} = '{value}'"
             if len(constraints) - counter > 0:
                 query_constraints += ' AND '
@@ -45,17 +43,22 @@ class BaseModel:
         for key, value in values_dict.items():
             instance.__setattr__(key, value)
 
+
+class BaseModel(HelperModel):
+    def __init__(self):
+        super().__init__()
+
     # --------------- CRUD -----------------
     @staticmethod
-    def update_company(id, **kwargs):
+    def update_instance(instance_id, **kwargs):
         pass
 
     @staticmethod
-    def delete_company(id, **kwargs):
+    def delete(instance_id, **kwargs):
         pass
 
     @classmethod
-    def get_object(cls, fields=(), **kwargs):
+    def get(cls, fields=(), **kwargs):
         instance = cls()
         fields = ', '.join(fields) if fields else '*'
         constrain_fields = instance._get_query_constraints(**kwargs)
@@ -76,6 +79,9 @@ class BaseModel:
 
     @classmethod
     def create(cls, **kwargs):
+        """ Creates a new record in the database.
+            returns: instance of calling class
+        """
         instance = cls(**kwargs)
         child_attributes = instance._get_child_attributes(ignore_pk=True)  # pk is automatically added in db
         column_names = ", ".join(child_attributes.keys())
@@ -93,12 +99,12 @@ class BaseModel:
             return instance
 
     @classmethod
-    def get_objects(cls, **kwargs):
+    def get_all(cls, **kwargs):
         pass
 
     @classmethod
     def get_or_create(cls, fields=(), constraints={}, **kwargs):
-        instance = cls.get_object(fields, **constraints) if constraints else None
+        instance = cls.get(fields, **constraints) if constraints else None
         if not instance:
             instance = cls.create(**kwargs)
 

@@ -7,6 +7,7 @@ linked_in_selectors = {
     # filters
     'all_filters_button': '/html/body/div[5]/div[3]/div[4]/section/div/section/div/div/div/div/div/button',
     'easy_apply_switch': '/html/body/div[3]/div/div/div[2]/ul/li[8]/fieldset/div/div/input',
+    'remote_jobs_input_box': '/html/body/div[3]/div/div/div[2]/ul/li[7]/fieldset/div/ul/li[1]/label',
     # about jobs
     'jobs_list': '/html/body/div[5]/div[3]/div[4]/div/div/main/div/div[1]/div/ul',
     'job_type': '/html/body/div[5]/div[3]/div[4]/div/div/main/div/div[2]/div/div[2]/div[1]/div/div[1]/div/div[1]/div[1]/div[3]/ul/li[1]/span',
